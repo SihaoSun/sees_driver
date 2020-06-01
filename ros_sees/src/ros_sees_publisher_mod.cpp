@@ -112,7 +112,6 @@ void RosSeesPublisherMod::frameEventPacketCallback(
 
 void RosSeesPublisherMod::imu6EventPacketCallback(
     iness::Imu6EventPacket &_packet) {
-  // imu_array_mutex_.lock();
   for (auto &event : _packet) {
     sensor_msgs::Imu imu_msg;
 
@@ -149,37 +148,7 @@ void RosSeesPublisherMod::imu6EventPacketCallback(
 
     if (imu_publisher_.getNumSubscribers()>0)
       imu_publisher_.publish(imu_msg);
-
-    // imu_array_.push_back(imu_msg);
   }
-  // imu_array_mutex_.unlock();
-}
-
-void RosSeesPublisherMod::specialEventPacketCallback(
-    iness::SpecialEventPacket &_packet) const {
-  /*
-  if (special_events_publisher_.getNumSubscribers() != 0) {
-    ros_dvs_msgs::AedatPacket aedat_msg;
-
-    aedat_msg.header.stamp = iness::time::toRos(
-        _packet.first().getTimestampUs(_packet.tsOverflowCount()));
-    aedat_msg.header.frame_id = special_events_topic_;
-
-    aedat_msg.aedat_type = (decltype(aedat_msg.aedat_type))_packet.type();
-    aedat_msg.event_source = _packet.header().event_source;
-
-    char *aedat_data_begin = reinterpret_cast<char *>(&_packet);
-    size_t packet_size =
-        sizeof(iness::EventPacketHeader) +
-        _packet.header().event_nr * _packet.header().event_size;
-    char *aedat_data_end = aedat_data_begin + packet_size;
-
-    aedat_msg.data.resize(packet_size, 0);
-    std::copy(aedat_data_begin, aedat_data_end, aedat_msg.data.begin());
-
-    special_events_publisher_.publish(aedat_msg);
-  }
-  */
 }
 
 void RosSeesPublisherMod::auxiliaryEventPacketCallback(
@@ -224,26 +193,13 @@ void RosSeesPublisherMod::setImageFilter(Float _contrast, Float _brightness,
 }
 
 void RosSeesPublisherMod::updateLoop(const ros::TimerEvent &time) {
-  // event_imu_array_.header.stamp = ros::Time::now();
   event_array_mutex_.lock();
-  // event_imu_array_.event_array = event_array_message_;
 
   if (event_publisher_.getNumSubscribers()>0)
     event_publisher_.publish(event_array_message_);
 
   event_array_message_.events.clear();
-  event_array_mutex_.unlock();
-  // imu_array_mutex_.lock();
-  // event_imu_array_.imu_array = imu_array_;
-  // imu_array_.clear();
-  // imu_array_mutex_.unlock();
-  // if (event_imu_publisher_.getNumSubscribers() > 0)
-  //   event_imu_publisher_.publish(event_imu_array_);
-
-  // imu_array.header.stamp = ros::Time::now();
   
-  // if (imu_publisher_.getNumSubscribers()>0)
-  //   imu_publisher_.publish(imu_array_);
-
+  event_array_mutex_.unlock();
 }
 } // namespace iness
