@@ -1,0 +1,8 @@
+<launch>
+  <node name="sees" pkg="ros_sees" type="sees_node" output="screen">
+    <param name="sees_config_file" value="$(find ros_sees)/parameters/sees-config.yaml"/>
+    <param name="serial_number" value="R3-00308"/>
+    <param name="update_frequency" value="200"/>
+    <param name="event_imu_topic" value="event_imu"/>
+  </node>
+</launch>

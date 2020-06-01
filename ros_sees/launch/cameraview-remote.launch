@@ -1,0 +1,11 @@
+<launch>
+  <machine name="quad" address="192.168.200.52" env-loader="/home/upboard/scripts/env.sh" user="upboard"/>
+
+  <node name="sees" pkg="ros_sees" type="sees_node" output="screen">
+    <param name="sees_config_file" value="/home/upboard/catkin_ws/src/rpg_dynamic_obstacle_avoidance/libiness_ros/ros_sees/parameters/sees-config.yaml"/>
+    <param name="serial_number" value="R3-00308"/>
+    <param name="update_frequency" value="200"/>
+    <param name="event_imu_topic" value="event_imu"/>
+  </node>
+</launch>
+

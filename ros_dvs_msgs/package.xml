@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format='2'>
+  <name>ros_dvs_msgs</name>
+  <version>1.0.0</version>
+  <description>ROS definitions for Insightness SEES event types</description>
+  <maintainer email="info@insightness.ch">Insightness AG</maintainer>
+  <license>Insightness Proprietary</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>message_runtime</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>rosbag</depend>
+</package>
+

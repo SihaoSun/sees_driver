@@ -1,0 +1,5 @@
+<map id="iness::ptree::SimpleBase" name="iness::ptree::SimpleBase">
+<area shape="rect" id="node4" href="$classiness_1_1ptree_1_1Simple.html" title="iness::ptree::Simple\l\&lt; T_TYPE \&gt;" alt="" coords="21,244,160,285"/>
+<area shape="rect" id="node2" href="$classiness_1_1ptree_1_1Node.html" title="Main class of our parameter tree functionality. It defines the main interfaces and provides the funct..." alt="" coords="26,95,155,121"/>
+<area shape="rect" id="node5" href="$classiness_1_1ptree_1_1SimpleValue.html" title="Template definition for a simple parameter tree node that holds its own value. " alt="" coords="5,333,176,375"/>
+</map>
