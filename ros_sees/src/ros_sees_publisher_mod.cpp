@@ -85,7 +85,8 @@ void RosSeesPublisherMod::polarityEventPacketCallback(
     ros_dvs_msgs::Event e;
     e.x = event.getX();
     e.y = event.getY();
-    e.ts = iness::time::toRos(event.getTimestampUs(_packet.tsOverflowCount()));
+    // e.ts = iness::time::toRos(event.getTimestampUs(_packet.tsOverflowCount()));
+    e.ts = ros::Time::now();
     e.polarity = (bool)event.getPolarity();
     event_array_message_.events.push_back(e);
   }
@@ -124,10 +125,10 @@ void RosSeesPublisherMod::imu6EventPacketCallback(
         event.getGyroX(), event.getGyroY(), event.getGyroZ());
     angular_velocity *= (M_PI / 180.0); // convert from deg/s to rad/s
 
-    if (do_imu_transformation_) {  //???
-      acceleration = imu_coordinate_rotation_ * acceleration;
-      angular_velocity = imu_coordinate_rotation_ * angular_velocity;
-    }
+    // if (do_imu_transformation_) {  //???
+    //   acceleration = imu_coordinate_rotation_ * acceleration;
+    //   angular_velocity = imu_coordinate_rotation_ * angular_velocity;
+    // }
 
     imu_msg.linear_acceleration.x = acceleration(0);
     imu_msg.linear_acceleration.y = acceleration(1);
@@ -141,8 +142,10 @@ void RosSeesPublisherMod::imu6EventPacketCallback(
     imu_msg.orientation_covariance[0] = -1.0;
 
     // time
-    imu_msg.header.stamp =
-        iness::time::toRos(event.getTimestampUs(_packet.tsOverflowCount()));
+    // imu_msg.header.stamp =
+    //     iness::time::toRos(event.getTimestampUs(_packet.tsOverflowCount()));
+
+    imu_msg.header.stamp = ros::Time::now();
 
     imu_msg.header.frame_id = imu6_topic_;
 
@@ -195,6 +198,7 @@ void RosSeesPublisherMod::setImageFilter(Float _contrast, Float _brightness,
 void RosSeesPublisherMod::updateLoop(const ros::TimerEvent &time) {
   event_array_mutex_.lock();
 
+  event_array_message_.header.stamp = ros::Time::now();
   if (event_publisher_.getNumSubscribers()>0)
     event_publisher_.publish(event_array_message_);
 
