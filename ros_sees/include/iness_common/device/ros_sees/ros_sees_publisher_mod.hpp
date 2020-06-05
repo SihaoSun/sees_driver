@@ -22,8 +22,9 @@
 #include "iness_common/device/sees/sees.hpp"
 
 #include "ros/ros.h"
-#include <ros_dvs_msgs/EventArray.h>
-#include <ros_dvs_msgs/EventImuArray.h>
+#include <dvs_msgs/EventArray.h>
+// #include <ros_dvs_msgs/EventImuArray.h>
+#include <sensor_msgs/Imu.h>
 #include <sensor_msgs/Image.h>
 
 namespace iness {
@@ -97,11 +98,11 @@ private:
   Eigen::Matrix<iness::Float, 3, 3>
       imu_coordinate_rotation_; //! Imu coordinate transform to be applied.
 
-  mutable ros_dvs_msgs::EventArray
+  mutable dvs_msgs::EventArray
       event_array_message_; //! Buffer for polarity events
 
   ros::Publisher event_imu_publisher_;
-  ros_dvs_msgs::EventImuArray event_imu_array_;
+  // dvs_msgs::EventImuArray event_imu_array_;
 
   ros::Publisher event_publisher_;
   ros::Publisher imu_publisher_;

@@ -4,7 +4,7 @@ project(ros_sees)
 set(${PROJECT_NAME}_PKG_DEPENDENCIES
   roscpp
   sees
-  ros_dvs_msgs
+  dvs_msgs
   dynamic_reconfigure
   ros_common_util
   eigen_catkin

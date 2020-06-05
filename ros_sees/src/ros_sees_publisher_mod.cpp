@@ -9,7 +9,7 @@
 #include "iness_common/device/ros_sees/ros_sees_publisher_mod.hpp"
 #include "iness_common/geometry/types.hpp"
 
-#include <ros_dvs_msgs/AedatPacket.h>
+// #include <ros_dvs_msgs/AedatPacket.h>
 
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/Temperature.h>
@@ -31,11 +31,11 @@ RosSeesPublisherMod::RosSeesPublisherMod( std::string device,std::string _polari
   std::string event_imu_topic;
   nh_p_.param<std::string>("event_imu_topic", event_imu_topic, "event_imu");
 
-  event_imu_publisher_ =
-      nh_p_.advertise<ros_dvs_msgs::EventImuArray>(device + event_imu_topic, 1);
+  // event_imu_publisher_ =
+  //     nh_p_.advertise<ros_dvs_msgs::EventImuArray>(device + event_imu_topic, 1);
   // frame_publisher_ = nh_p_.advertise<sensor_msgs::Image>("image_raw", 1);
 
-  event_publisher_ = nh_p_.advertise<ros_dvs_msgs::EventArray>("/sees/events",10);
+  event_publisher_ = nh_p_.advertise<dvs_msgs::EventArray>("/sees/events",10);
   imu_publisher_ = nh_p_.advertise<sensor_msgs::Imu>("/sees/imu",10);
 
   event_array_message_.width = 346;
@@ -82,7 +82,7 @@ void RosSeesPublisherMod::polarityEventPacketCallback(
     iness::PolarityEventPacket &_packet) {
   event_array_mutex_.lock();
   for (auto &event : _packet) {
-    ros_dvs_msgs::Event e;
+    dvs_msgs::Event e;
     e.x = event.getX();
     e.y = event.getY();
     // e.ts = iness::time::toRos(event.getTimestampUs(_packet.tsOverflowCount()));
@@ -154,31 +154,31 @@ void RosSeesPublisherMod::imu6EventPacketCallback(
   }
 }
 
-void RosSeesPublisherMod::auxiliaryEventPacketCallback(
-    aedat::IEventPacket::Ptr _packet) const {
-  if (auxiliary_publisher_.getNumSubscribers() != 0) {
-    ros_dvs_msgs::AedatPacket aedat_msg;
+// void RosSeesPublisherMod::auxiliaryEventPacketCallback(
+//     aedat::IEventPacket::Ptr _packet) const {
+//   if (auxiliary_publisher_.getNumSubscribers() != 0) {
+//     ros_dvs_msgs::AedatPacket aedat_msg;
 
-    aedat_msg.header.stamp =
-        iness::time::toRos(_packet->getFirstEventTimestampUs());
-    aedat_msg.header.frame_id = "aedat_auxiliary";
+//     aedat_msg.header.stamp =
+//         iness::time::toRos(_packet->getFirstEventTimestampUs());
+//     aedat_msg.header.frame_id = "aedat_auxiliary";
 
-    aedat_msg.aedat_type =
-        (decltype(aedat_msg.aedat_type))_packet->header()->event_type;
-    aedat_msg.event_source = _packet->header()->event_source;
+//     aedat_msg.aedat_type =
+//         (decltype(aedat_msg.aedat_type))_packet->header()->event_type;
+//     aedat_msg.event_source = _packet->header()->event_source;
 
-    char *aedat_data_begin = _packet->data();
-    size_t packet_size =
-        sizeof(iness::EventPacketHeader) +
-        _packet->header()->event_nr * _packet->header()->event_size;
-    char *aedat_data_end = aedat_data_begin + packet_size;
+//     char *aedat_data_begin = _packet->data();
+//     size_t packet_size =
+//         sizeof(iness::EventPacketHeader) +
+//         _packet->header()->event_nr * _packet->header()->event_size;
+//     char *aedat_data_end = aedat_data_begin + packet_size;
 
-    aedat_msg.data.resize(packet_size, 0);
-    std::copy(aedat_data_begin, aedat_data_end, aedat_msg.data.begin());
+//     aedat_msg.data.resize(packet_size, 0);
+//     std::copy(aedat_data_begin, aedat_data_end, aedat_msg.data.begin());
 
-    auxiliary_publisher_.publish(aedat_msg);
-  }
-}
+//     auxiliary_publisher_.publish(aedat_msg);
+//   }
+// }
 
 void RosSeesPublisherMod::setImuTransform(
     const Eigen::Matrix<iness::Float, 3, 3> &_rotation) {
