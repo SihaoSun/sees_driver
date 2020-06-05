@@ -10,8 +10,8 @@ UserSettings: # Sets high level settings for a SEES device. High-level settings 
     AutoExposureMedianReference: 0.34 # Sets the median frame brightness to which the auto exposure algorithm controls the exposure time (0...1).
   Imu:
     Enable: true # Enables or disables imu readout on the module
-    AccelerometerScale: 1 # Sets the operational range of the accelerometer
-    GyroscopeScale: 1 # Sets the operational range of the gyroscope
+    AccelerometerScale: 3 # Sets the operational range of the accelerometer
+    GyroscopeScale: 3 # Sets the operational range of the gyroscope
 Driver:
   Information:
     ModuleType: Seem1
