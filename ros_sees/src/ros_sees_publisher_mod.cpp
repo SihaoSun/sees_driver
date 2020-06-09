@@ -199,7 +199,7 @@ void RosSeesPublisherMod::updateLoop(const ros::TimerEvent &time) {
   event_array_mutex_.lock();
 
   event_array_message_.header.stamp = ros::Time::now();
-  if (event_publisher_.getNumSubscribers()>0)
+  if (event_publisher_.getNumSubscribers()>0 && (!event_array_message_.events.empty()))
     event_publisher_.publish(event_array_message_);
 
   event_array_message_.events.clear();
