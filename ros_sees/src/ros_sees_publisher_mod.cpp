@@ -46,8 +46,8 @@ RosSeesPublisherMod::RosSeesPublisherMod( std::string device,std::string _polari
   event_array_message_.events.reserve(1000000);
   event_array_mutex_.unlock();
 
-  update_timer_ = nh_p_.createTimer(ros::Rate(update_frequency_),
-                                    &RosSeesPublisherMod::updateLoop, this);
+  // update_timer_ = nh_p_.createTimer(ros::Rate(update_frequency_),
+  //                                   &RosSeesPublisherMod::updateLoop, this);
 }
 
 void RosSeesPublisherMod::setDvsSize(unsigned int _width,
@@ -80,7 +80,7 @@ void RosSeesPublisherMod::packetCallback(aedat::IEventPacket::Ptr _packet) {
 
 void RosSeesPublisherMod::polarityEventPacketCallback(
     iness::PolarityEventPacket &_packet) {
-  event_array_mutex_.lock();
+  // event_array_mutex_.lock();
   for (auto &event : _packet) {
     dvs_msgs::Event e;
     e.x = event.getX();
@@ -90,7 +90,13 @@ void RosSeesPublisherMod::polarityEventPacketCallback(
     e.polarity = (bool)event.getPolarity();
     event_array_message_.events.push_back(e);
   }
-  event_array_mutex_.unlock();
+  
+  event_array_message_.header.stamp = ros::Time::now();
+  if (event_publisher_.getNumSubscribers()>0 && (!event_array_message_.events.empty()))
+    event_publisher_.publish(event_array_message_);
+
+  event_array_message_.events.clear(); 
+  // event_array_mutex_.unlock();
 }
 
 void RosSeesPublisherMod::frameEventPacketCallback(
@@ -196,7 +202,7 @@ void RosSeesPublisherMod::setImageFilter(Float _contrast, Float _brightness,
 }
 
 void RosSeesPublisherMod::updateLoop(const ros::TimerEvent &time) {
-  event_array_mutex_.lock();
+  // event_array_mutex_.lock();
 
   event_array_message_.header.stamp = ros::Time::now();
   if (event_publisher_.getNumSubscribers()>0 && (!event_array_message_.events.empty()))
@@ -204,6 +210,6 @@ void RosSeesPublisherMod::updateLoop(const ros::TimerEvent &time) {
 
   event_array_message_.events.clear();
   
-  event_array_mutex_.unlock();
+  // event_array_mutex_.unlock();
 }
 } // namespace iness

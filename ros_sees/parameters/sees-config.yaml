@@ -4,7 +4,7 @@ UserSettings: # Sets high level settings for a SEES device. High-level settings 
     EventThreshold: 40 # Sets the event threshold
     EventBalance: 20   #Sets the event balance (between on and off events)
   Aps:
-    Enable: true # Enables or disables aps frame readout on the module
+    Enable: false # Enables or disables aps frame readout on the module
     ExposureTimeUs: 8000 # Sets the exposure time for aps frames [microseconds].
     AutoExposureEnable: false # Enables or disables auto-exposure for aps frames.
     AutoExposureMedianReference: 0.34 # Sets the median frame brightness to which the auto exposure algorithm controls the exposure time (0...1).
