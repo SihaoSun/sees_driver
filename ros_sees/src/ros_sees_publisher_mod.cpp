@@ -35,7 +35,7 @@ RosSeesPublisherMod::RosSeesPublisherMod( std::string device,std::string _polari
   //     nh_p_.advertise<ros_dvs_msgs::EventImuArray>(device + event_imu_topic, 1);
   // frame_publisher_ = nh_p_.advertise<sensor_msgs::Image>("image_raw", 1);
 
-  event_publisher_ = nh_p_.advertise<dvs_msgs::EventArray>("/sees/events",10);
+  event_publisher_ = nh_p_.advertise<ros_dvs_msgs::EventArray>("/sees/events",10);
   imu_publisher_ = nh_p_.advertise<sensor_msgs::Imu>("/sees/imu",10);
 
   event_array_message_.width = 346;
@@ -82,7 +82,7 @@ void RosSeesPublisherMod::polarityEventPacketCallback(
     iness::PolarityEventPacket &_packet) {
   // event_array_mutex_.lock();
   for (auto &event : _packet) {
-    dvs_msgs::Event e;
+    ros_dvs_msgs::Event e;
     e.x = event.getX();
     e.y = event.getY();
     // e.ts = iness::time::toRos(event.getTimestampUs(_packet.tsOverflowCount()));
