@@ -9,7 +9,6 @@ set(${PROJECT_NAME}_PKG_DEPENDENCIES
   ros_common_util
   eigen_catkin
   sensor_msgs
-  rpg_common
 )
 
 SET(CMAKE_BUILD_TYPE Debug) # Release, RelWithDebInfo
@@ -46,20 +45,12 @@ include_directories(
 set(LIBRARY_CPP_FILES
   src/ros_sees_publisher.cpp
   src/ros_sees_publisher_mod.cpp
-  src/stereo_class.cpp
 )
 
 add_executable(sees_node
   src/main.cpp
 )
 
-add_executable(sees_node_stereo
-  src/stereo.cpp
-)
-
-add_executable(sees_node_stereo_class
-  src/stereo_class
-)
 
 add_dependencies(sees_node
   ${catkin_EXPORTED_TARGETS}
@@ -67,26 +58,6 @@ add_dependencies(sees_node
 )
 
 target_link_libraries(sees_node
-  ${catkin_LIBRARIES}
-  ${PROJECT_NAME}
-)
-
-add_dependencies(sees_node_stereo
-  ${catkin_EXPORTED_TARGETS}
-  ${PROJECT_NAME}_gencfg
-)
-
-target_link_libraries(sees_node_stereo
-  ${catkin_LIBRARIES}
-  ${PROJECT_NAME}
-)
-
-add_dependencies(sees_node_stereo_class
-  ${catkin_EXPORTED_TARGETS}
-  ${PROJECT_NAME}_gencfg
-)
-
-target_link_libraries(sees_node_stereo_class
   ${catkin_LIBRARIES}
   ${PROJECT_NAME}
 )

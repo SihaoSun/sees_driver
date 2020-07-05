@@ -16,6 +16,5 @@
   <depend>ros_common_util</depend>
   <depend>eigen_catkin</depend>
   <depend>sensor_msgs</depend>
-  <depend>rpg_common</depend>
   
 </package>
