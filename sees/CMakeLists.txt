@@ -3,7 +3,10 @@ project(sees)
 
 find_package(catkin)
 
-find_library(sees_LIBRARIES NAMES iness libiness ${PROJECT_NAME} PATHS "lib")
+# set architecture type in the lib path (armv7l, linux64, aarch64)
+set(PATH_TO_LIB "lib/linux64")
+
+find_library(sees_LIBRARIES NAMES iness libiness ${PROJECT_NAME} PATHS ${PATH_TO_LIB})
 
 catkin_package(
     INCLUDE_DIRS
