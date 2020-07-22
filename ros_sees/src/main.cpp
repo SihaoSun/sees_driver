@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
   if (driver->start()) {
     ros::AsyncSpinner spinner(1);
     spinner.start();
-    ros::Duration(120.0).sleep();
+    ros::Duration(600.0).sleep();
   }
   ros::shutdown();
   driver->stop();
