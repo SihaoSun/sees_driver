@@ -1,9 +1,6 @@
-#!/bin/bash
-echo "Copying udev rule (needs root privileges)."
-sudo cp 65-inivation.rules /etc/udev/rules.d/
+  GNU nano 2.9.3                                                                       64-insightness.rules                                                                                  
 
-echo "Reloading udev rules."
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-
-echo "Done!"
+# All DVS/DAVIS systems
+SUBSYSTEM=="usb", ATTR{idVendor}=="152a", ATTR{idProduct}=="84[0-1]?", MODE="0666"
+# Insightness specific systems
+SUBSYSTEM=="usb", ATTR{idVendor}=="152a", ATTR{idProduct}=="840e", MODE="0666"
